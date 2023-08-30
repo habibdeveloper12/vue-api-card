@@ -10,7 +10,8 @@
       placeholder="Search for Ingredients"
     />
     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-      <a href="#"
+      <a
+        href="#"
         @click.prevent="openIngredient(ingredient)"
         v-for="ingredient of computedIngredients"
         :key="ingredient.idIngredient"
@@ -40,7 +41,7 @@ const computedIngredients = computed(() => {
 });
 
 function openIngredient(ingredient) {
-  store.commit('setIngredient', ingredient)
+  store.commit("setIngredient", ingredient);
   router.push({
     name: "byIngredient",
     params: { ingredient: ingredient.strIngredient },
@@ -48,8 +49,16 @@ function openIngredient(ingredient) {
 }
 
 onMounted(() => {
-  axiosClient.get("list.php?i=list").then(({ data }) => {
-    ingredients.value = data.meals;
-  });
+  axiosClient
+    .get("list.php?i=list")
+    .then(({ data }) => {
+      ingredients.value = data.meals;
+    })
+    .catch((error) => {
+      console.error(
+        "An error occurred while fetching random meal data:",
+        error
+      );
+    });
 });
 </script>

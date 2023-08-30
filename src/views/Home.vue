@@ -17,7 +17,13 @@ onMounted(async () => {
   for (let i = 0; i < 10; i++) {
     axiosClient
       .get(`random.php`)
-      .then(({ data }) => meals.value.push(data.meals[0]));
+      .then(({ data }) => meals.value.push(data.meals[0]))
+      .catch((error) => {
+        console.error(
+          "An error occurred while fetching random meal data:",
+          error
+        );
+      });
   }
 });
 </script>
